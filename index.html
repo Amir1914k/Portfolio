@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ============================================================
+     EDIT ME: page title + your name show up in browser tabs and
+     when the link is shared. Swap [Last Name] everywhere.
+     ============================================================ -->
+<title>Amir [Last Name] — Embedded / Analog Engineer</title>
+<meta name="description" content="Portfolio of Amir [Last Name], embedded systems and analog front-end engineer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a0e0d;
+    --bg-2:#0f1714;
+    --panel:#111b18;
+    --ink:#d8e8e0;
+    --muted:#7d958c;
+    --phosphor:#2ee87f;
+    --phosphor-dim:#1c8f51;
+    --amber:#ffb454;
+    --line:rgba(46,232,127,.13);
+    --line-strong:rgba(46,232,127,.28);
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --display:"Bricolage Grotesque",var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* oscilloscope graticule background */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:34px 34px;
+    mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 100%);
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(46,232,127,.10),transparent 60%);
+  }
+  .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 28px}
+
+  /* ---------- top status bar ---------- */
+  .statusbar{
+    border-bottom:1px solid var(--line-strong);
+    font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+    color:var(--muted);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 0;flex-wrap:wrap;gap:8px;
+  }
+  .statusbar .dot{color:var(--phosphor)}
+  .blink{animation:blink 1.4s steps(1) infinite}
+  @keyframes blink{50%{opacity:.15}}
+
+  /* ---------- hero ---------- */
+  header{padding:76px 0 54px;opacity:0;animation:rise .8s .1s forwards}
+  .eyebrow{font-family:var(--mono);font-size:13px;color:var(--phosphor);letter-spacing:.18em;text-transform:uppercase}
+  h1{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2.6rem,8vw,5rem);line-height:.98;
+    letter-spacing:-.02em;margin:14px 0 18px;
+  }
+  h1 .glow{color:var(--phosphor);text-shadow:0 0 24px rgba(46,232,127,.45)}
+  .tagline{font-size:clamp(1.05rem,2.4vw,1.35rem);color:var(--ink);max-width:60ch}
+  /* EDIT ME: dial the humor here. Keep it dry; recruiters skim. */
+  .sub{color:var(--muted);margin-top:14px;max-width:62ch;font-size:1rem}
+
+  /* scope trace */
+  .scope{margin:38px 0 0;border:1px solid var(--line-strong);border-radius:10px;background:linear-gradient(180deg,#0c1512,#0a100e);overflow:hidden}
+  .scope svg{display:block;width:100%;height:120px}
+  .trace{fill:none;stroke:var(--phosphor);stroke-width:2;filter:drop-shadow(0 0 6px rgba(46,232,127,.6));
+    stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.4s 1s ease-out forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* ---------- generic section ---------- */
+  section{padding:46px 0;border-top:1px solid var(--line)}
+  .sec-label{font-family:var(--mono);font-size:12px;color:var(--phosphor);letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+  .sec-label::before{content:"";width:8px;height:8px;background:var(--phosphor);box-shadow:0 0 10px var(--phosphor);border-radius:1px}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3.5vw,2.1rem);letter-spacing:-.01em;margin-bottom:14px}
+  p.body{color:var(--ink);max-width:66ch;margin-bottom:14px}
+  .muted{color:var(--muted)}
+
+  /* ---------- projects ---------- */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{
+    border:1px solid var(--line-strong);border-radius:12px;
+    background:linear-gradient(180deg,var(--panel),#0c1411);
+    padding:24px;transition:transform .25s,border-color .25s,box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--phosphor-dim);box-shadow:0 10px 40px -16px rgba(46,232,127,.4)}
+  .card .tag{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase}
+  .card h3{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:8px 0 10px}
+  .card p{color:var(--muted);font-size:.95rem}
+  .card a{color:var(--phosphor);text-decoration:none;font-family:var(--mono);font-size:.85rem;margin-top:14px;display:inline-block;border-bottom:1px solid transparent;transition:border-color .2s}
+  .card a:hover{border-color:var(--phosphor)}
+
+  /* ---------- datasheet / skills table ---------- */
+  .datasheet{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;font-family:var(--mono);font-size:.9rem}
+  .datasheet .row{display:grid;grid-template-columns:230px 1fr;border-top:1px solid var(--line)}
+  .datasheet .row:first-child{border-top:none}
+  @media(max-width:560px){.datasheet .row{grid-template-columns:1fr}}
+  .datasheet .k{padding:13px 18px;color:var(--phosphor);background:rgba(46,232,127,.04);border-right:1px solid var(--line)}
+  .datasheet .v{padding:13px 18px;color:var(--ink)}
+
+  /* ---------- publications ---------- */
+  .pub{border-left:2px solid var(--phosphor-dim);padding:4px 0 4px 18px;margin-bottom:20px}
+  .pub .t{font-weight:600}
+  .pub .m{color:var(--muted);font-size:.9rem;font-family:var(--mono)}
+
+  /* ---------- footer ---------- */
+  footer{padding:54px 0 70px;border-top:1px solid var(--line-strong);text-align:center}
+  .contacts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+  .contacts a{
+    font-family:var(--mono);font-size:.9rem;color:var(--ink);text-decoration:none;
+    border:1px solid var(--line-strong);border-radius:8px;padding:11px 20px;transition:.2s;
+  }
+  .contacts a:hover{color:var(--phosphor);border-color:var(--phosphor);background:rgba(46,232,127,.05)}
+  .colophon{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px;letter-spacing:.03em}
+
+  @keyframes rise{to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ====== STATUS BAR ====== -->
+  <div class="statusbar">
+    <span><span class="dot">●</span> CH1: AVAILABLE &nbsp;|&nbsp; TRIG: AUG 2026 INTERNSHIP &nbsp;|&nbsp; RELOCATE: YES</span>
+    <span>SWEEP <span class="blink">_</span></span>
+  </div>
+
+  <!-- ====== HERO ====== -->
+  <header>
+    <div class="eyebrow">PhD Candidate · Biomedical Engineering · UConn</div>
+    <!-- EDIT ME: your name -->
+    <h1>Amir <span class="glow">[Last&nbsp;Name]</span></h1>
+    <p class="tagline">I design analog front-ends, lay out the PCBs that carry them, and write the bare-metal firmware that makes them behave.</p>
+    <!-- EDIT ME: the funny line. This is the dial. Currently set to "dry". -->
+    <p class="sub">Mostly biosignals — turning faint electrical whispers from skin and brain into numbers you can trust. Have soldering iron, will travel.</p>
+
+    <!-- scope trace decoration -->
+    <div class="scope" aria-hidden="true">
+      <svg viewBox="0 0 900 120" preserveAspectRatio="none">
+        <path class="trace" d="M0,60 L120,60 Q150,60 160,30 T200,60 T240,60 L360,60 Q380,60 390,95 Q400,25 410,60 L540,60 Q560,60 580,40 T620,60 L760,60 Q780,60 790,30 T830,60 L900,60"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ====== ABOUT ====== -->
+  <section class="reveal">
+    <div class="sec-label">01 · about</div>
+    <h2>The short version</h2>
+    <!-- EDIT ME freely. Keep one sentence of voice, the rest credible. -->
+    <p class="body">I work at the seam between circuit-level hardware and biomedical signal processing — analog front-end design, multilayer PCB layout, and embedded C on STM32, paired with the DSP that turns raw samples into something a clinician would believe. I currently lead embedded systems work in UConn's Neuroprosthesis Lab and hardware in the Wearable Device Lab.</p>
+    <p class="body muted">Looking for a 3–12 month engineering internship starting August. Firmware, analog/embedded, instrumentation — open to relocating for the right bench.</p>
+  </section>
+
+  <!-- ====== PROJECTS ====== -->
+  <section class="reveal">
+    <div class="sec-label">02 · selected work</div>
+    <h2>Things I built and can explain at a whiteboard</h2>
+    <div class="grid">
+
+      <!-- EDIT ME: each card. Update links to repos / writeups. -->
+      <div class="card">
+        <span class="tag">Analog · PCB · Validation</span>
+        <h3>SAFE-EDA Front-End</h3>
+        <p>A standalone AC-based electrodermal activity front-end (LTC6992 PWM oscillator, MOSFET level-shifter, Sallen-Key filtering around an ADA4505). Validated against a PowerLab/FE116 gold standard across multiple subjects.</p>
+        <a href="#">▸ read the writeup</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">PCB · Firmware · Bring-up</span>
+        <h3>Custom EDA Acquisition Board</h3>
+        <p>Full hardware pipeline owned end to end: schematic → KiCad layout → fab → soldering → verification. Calibrated 10-bit ADC against known resistors (R²≈0.96) and cross-checked against a reference belt.</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Firmware · STM32 · SPI/I2C/UART</span>
+        <h3>Bare-Metal Acquisition Firmware</h3>
+        <p>Register-level C on ARM Cortex-M, peripheral bring-up, and wireless streaming. The unglamorous layer nobody documents — which is exactly why it's worth documenting.</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">DSP · MATLAB · ML</span>
+        <h3>EEG Motor-Imagery Pipeline</h3>
+        <p>3-class motor imagery classification on 64-channel EEG, with a preprocessing pipeline rebuilt to kill artifact leakage — and an honest accuracy number once the leak was fixed. (Ask me about the frontal-channel trap.)</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== SKILLS DATASHEET ====== -->
+  <section class="reveal">
+    <div class="sec-label">03 · datasheet</div>
+    <h2>Specifications</h2>
+    <div class="datasheet">
+      <div class="row"><div class="k">Analog Design</div><div class="v">AFE topologies · instrumentation amps (AD8226/AD8220) · Howland pump · Sallen-Key · LTspice/SPICE</div></div>
+      <div class="row"><div class="k">PCB</div><div class="v">Multilayer layout in KiCad · schematic capture · fab-out · rework &amp; bring-up</div></div>
+      <div class="row"><div class="k">Firmware</div><div class="v">Bare-metal C · STM32 / ARM Cortex-M · register-level peripherals · SPI / I2C / UART</div></div>
+      <div class="row"><div class="k">Signal Processing</div><div class="v">MATLAB DSP pipelines · Python scripting · filtering · feature extraction</div></div>
+      <!-- EDIT ME: the joke spec. Delete if applying somewhere very buttoned-up. -->
+      <div class="row"><div class="k">Operating Temp.</div><div class="v">Optimal within 30 cm of a hot-air rework station</div></div>
+      <div class="row"><div class="k">Power Draw</div><div class="v">≈ 1 cold brew per debug session (typ.)</div></div>
+    </div>
+  </section>
+
+  <!-- ====== PUBLICATIONS ====== -->
+  <section class="reveal">
+    <div class="sec-label">04 · publications</div>
+    <h2>On the record</h2>
+    <!-- EDIT ME: real titles, venues, links. Add or remove entries. -->
+    <div class="pub">
+      <div class="t">A wearable EDA measurement architecture <span class="muted">— [add link]</span></div>
+      <div class="m">IEEE Sensors · under review</div>
+    </div>
+    <div class="pub">
+      <div class="t">Register-level microcontroller architecture for real-time EDA acquisition <span class="muted">— [add link]</span></div>
+      <div class="m">in preparation</div>
+    </div>
+    <p class="body muted">Full list on Google Scholar — <a href="#" style="color:var(--phosphor)">[add link]</a></p>
+  </section>
+
+  <!-- ====== FOOTER / CONTACT ====== -->
+  <footer>
+    <div class="sec-label" style="justify-content:center">05 · contact</div>
+    <h2>Let's talk hardware</h2>
+    <div class="contacts">
+      <!-- EDIT ME: real links. Email opens mail client; rest open in new tab. -->
+      <a href="mailto:you@example.com">✉ email</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">▸ github</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">▸ linkedin</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">▸ résumé (pdf)</a>
+    </div>
+    <div class="colophon">// hand-written single-file site · no framework · no tracker · just HTML and a soldering habit</div>
+  </footer>
+
+</div>
+
+<script>
+  // gentle scroll reveal — pure JS, no libraries
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
