@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Amir Karimi — Embedded / Analog Engineer</title>
+<meta name="description" content="Portfolio of Amir Karimi, embedded systems and analog front-end engineer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a0e0d;
+    --bg-2:#0f1714;
+    --panel:#111b18;
+    --ink:#d8e8e0;
+    --muted:#7d958c;
+    --phosphor:#2ee87f;
+    --phosphor-dim:#1c8f51;
+    --amber:#ffb454;
+    --line:rgba(46,232,127,.13);
+    --line-strong:rgba(46,232,127,.28);
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --display:"Bricolage Grotesque",var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:34px 34px;
+    mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 100%);
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(46,232,127,.10),transparent 60%);
+  }
+  .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 28px}
+
+  /* ---- HERO ---- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:60px 0;
+  }
+  .hero-inner{
+    display:flex;
+    align-items:flex-start;
+    gap:52px;
+    width:100%;
+  }
+  @media(max-width:680px){
+    .hero-inner{flex-direction:column;gap:32px}
+  }
+
+  /* left: photos */
+  .photos{
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
+    width:200px;
+  }
+  .photo-stack{position:relative;width:180px}
+  .photo-stack img{
+    width:180px;
+    height:220px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid var(--line-strong);
+    display:block;
+    transition:opacity .3s;
+    image-rendering:auto;
+  }
+  .photo-stack img.unpro{
+    position:absolute;
+    top:0;left:0;
+    opacity:0;
+  }
+  .photo-stack:hover img.pro{opacity:0}
+  .photo-stack:hover img.unpro{opacity:1}
+  .photo-caption{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.5;
+    padding:0 4px;
+  }
+  .photo-caption em{color:var(--amber);font-style:normal}
+
+  /* right: text */
+  .hero-text{flex:1;padding-top:4px}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;
+    color:var(--phosphor);letter-spacing:.18em;text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2.4rem,7vw,4.2rem);
+    line-height:.98;letter-spacing:-.02em;margin-bottom:18px;
+  }
+  h1 .glow{color:var(--phosphor);text-shadow:0 0 24px rgba(46,232,127,.45)}
+  .intro{font-size:1.05rem;color:var(--ink);max-width:54ch;margin-bottom:8px}
+  .intro-sub{font-size:.95rem;color:var(--muted);max-width:54ch;margin-bottom:36px}
+
+  /* skills list */
+  .skills-label{
+    font-family:var(--mono);font-size:11px;color:var(--phosphor);
+    letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .skills-label::before{content:"";width:7px;height:7px;background:var(--phosphor);box-shadow:0 0 8px var(--phosphor);border-radius:1px}
+  .skills{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .skills li a{
+    font-family:var(--mono);
+    font-size:.92rem;
+    color:var(--ink);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:color .2s;
+  }
+  .skills li a::before{content:"▸";color:var(--phosphor-dim);transition:color .2s,transform .2s}
+  .skills li a:hover{color:var(--phosphor)}
+  .skills li a:hover::before{color:var(--phosphor);transform:translateX(3px)}
+
+  /* ---- SECTIONS ---- */
+  section{padding:54px 0;border-top:1px solid var(--line);display:none}
+  section.active{display:block}
+
+  /* projects nav button */
+  .nav-btn{
+    font-family:var(--mono);font-size:.92rem;
+    color:var(--phosphor);background:rgba(46,232,127,.06);
+    border:1px solid var(--line-strong);border-radius:8px;
+    padding:11px 22px;margin:22px 0 26px;cursor:pointer;
+    transition:background .2s,border-color .2s;display:inline-block;
+    letter-spacing:.04em;
+  }
+  .nav-btn:hover{background:rgba(46,232,127,.14);border-color:var(--phosphor)}
+
+  /* skills hint */
+  .skills-hint{
+    font-family:var(--mono);font-size:.8rem;color:var(--muted);
+    margin-bottom:10px;font-style:italic;
+  }
+
+  /* projects page — full width, 3 columns */
+  #projects{
+    padding:32px 0;
+    /* break out of .wrap to use full viewport width */
+    width:100vw;
+    margin-left:calc(-50vw + 50%);
+    padding-left:28px;
+    padding-right:28px;
+    box-sizing:border-box;
+  }
+  .projects-header{display:flex;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+  .projects-header h2{margin-bottom:0;font-size:clamp(1.2rem,2.5vw,1.7rem)}
+  .cols{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:20px;
+    height:calc(100vh - 160px);
+    min-height:480px;
+  }
+  @media(max-width:780px){
+    .cols{grid-template-columns:1fr;height:auto}
+  }
+  .col{
+    border:1px solid var(--line-strong);border-radius:16px;
+    background:linear-gradient(180deg,var(--panel),#0c1411);
+    padding:28px;
+    overflow-y:auto;
+    display:flex;flex-direction:column;gap:0;
+  }
+  .col-title{
+    font-family:var(--display);font-size:1.1rem;font-weight:700;
+    color:var(--phosphor);
+    display:flex;align-items:center;gap:10px;padding-bottom:18px;
+    border-bottom:1px solid var(--line);flex-shrink:0;
+    margin-bottom:20px;letter-spacing:-.01em;
+  }
+  .col-title::before{content:"";width:8px;height:8px;background:var(--phosphor);box-shadow:0 0 10px var(--phosphor);border-radius:2px;flex-shrink:0}
+  .proj-card{
+    flex:1;
+    border:1px solid var(--line);border-radius:12px;
+    background:rgba(46,232,127,.03);padding:20px;
+  }
+  .proj-card .tag{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase}
+  .proj-card h3{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:8px 0 12px}
+  .proj-card p{color:var(--muted);font-size:.9rem;line-height:1.6}
+
+  /* neurostimulator two-part card */
+  .neuro-card{display:flex;flex-direction:column;gap:0;padding:20px}
+  .neuro-part{padding:4px 0 16px}
+  .neuro-row{display:flex;gap:16px;align-items:flex-start}
+  .proj-img{
+    width:130px;flex-shrink:0;
+    border-radius:8px;border:1px solid var(--line-strong);
+    object-fit:contain;background:#0a0e0d;
+  }
+  .proj-img-top{
+    width:100%;max-height:200px;
+    object-fit:contain;background:#0a0e0d;
+    border-radius:10px;border:1px solid var(--line-strong);
+    margin-bottom:14px;display:block;
+  }
+  .neuro-row p{color:var(--muted);font-size:.88rem;line-height:1.65}
+  .neuro-part p{color:var(--muted);font-size:.88rem;line-height:1.65}
+  .neuro-divider{
+    height:1px;background:var(--line);
+    margin:4px 0 16px;opacity:.6;
+  }
+
+  .projects-note{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:-18px 0 26px;font-style:italic}
+  .col-sub{font-size:.85rem;font-weight:400;opacity:.65;margin-left:4px}
+  .col-meta{
+    font-family:var(--mono);font-size:.78rem;color:var(--muted);
+    margin:-14px 0 16px;line-height:1.5;
+  }
+
+  /* side column entries */
+  .side-intro{color:var(--muted);font-size:.88rem;line-height:1.65;font-style:italic}
+  .side-outro{color:var(--muted);font-size:.85rem;line-height:1.65;font-style:italic;opacity:.8}
+  .side-entry p{color:var(--muted);font-size:.88rem;line-height:1.65}
+  .side-img{width:110px;flex-shrink:0}
+
+  /* side col accent */
+  .col.side{background:linear-gradient(180deg,#111418,#0c100e);border-color:rgba(255,180,84,.18)}
+  .col.side .col-title{color:var(--amber)}
+  .col.side .col-title::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  .col.side .proj-card{background:rgba(255,180,84,.03);border-color:rgba(255,180,84,.12)}
+
+  /* back link */
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:.88rem;
+    color:var(--phosphor);text-decoration:none;
+    border:1px solid var(--line-strong);border-radius:8px;
+    padding:10px 18px;margin-bottom:36px;
+    transition:background .2s,border-color .2s;
+    cursor:pointer;background:none;
+  }
+  .back-link:hover{background:rgba(46,232,127,.06);border-color:var(--phosphor)}
+  .sec-label{
+    font-family:var(--mono);font-size:12px;color:var(--phosphor);
+    letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .sec-label::before{content:"";width:8px;height:8px;background:var(--phosphor);box-shadow:0 0 10px var(--phosphor);border-radius:1px}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.01em;margin-bottom:16px}
+  p.body{color:var(--ink);max-width:66ch;margin-bottom:12px}
+  .muted{color:var(--muted)}
+
+  /* project cards */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{
+    border:1px solid var(--line-strong);border-radius:12px;
+    background:linear-gradient(180deg,var(--panel),#0c1411);
+    padding:24px;transition:transform .25s,border-color .25s,box-shadow .25s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--phosphor-dim);box-shadow:0 10px 40px -16px rgba(46,232,127,.4)}
+  .card .tag{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase}
+  .card h3{font-family:var(--display);font-weight:600;font-size:1.2rem;margin:8px 0 10px}
+  .card p{color:var(--muted);font-size:.9rem}
+  .card a{color:var(--phosphor);text-decoration:none;font-family:var(--mono);font-size:.85rem;margin-top:14px;display:inline-block;border-bottom:1px solid transparent;transition:border-color .2s}
+  .card a:hover{border-color:var(--phosphor)}
+
+  /* datasheet */
+  .datasheet{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;font-family:var(--mono);font-size:.9rem}
+  .datasheet .row{display:grid;grid-template-columns:220px 1fr;border-top:1px solid var(--line)}
+  .datasheet .row:first-child{border-top:none}
+  @media(max-width:560px){.datasheet .row{grid-template-columns:1fr}}
+  .datasheet .k{padding:13px 18px;color:var(--phosphor);background:rgba(46,232,127,.04);border-right:1px solid var(--line)}
+  .datasheet .v{padding:13px 18px;color:var(--ink)}
+
+  /* publications */
+  .pub{border-left:2px solid var(--phosphor-dim);padding:4px 0 4px 18px;margin-bottom:20px}
+  .pub .t{font-weight:600}
+  .pub .m{color:var(--muted);font-size:.9rem;font-family:var(--mono)}
+
+  /* footer */
+  footer{padding:54px 0 70px;border-top:1px solid var(--line-strong);text-align:center}
+  .contacts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+  .contacts a{
+    font-family:var(--mono);font-size:.9rem;color:var(--ink);text-decoration:none;
+    border:1px solid var(--line-strong);border-radius:8px;padding:11px 20px;transition:.2s;
+  }
+  .contacts a:hover{color:var(--phosphor);border-color:var(--phosphor);background:rgba(46,232,127,.05)}
+  .colophon{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px;letter-spacing:.03em}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ====== HERO ====== -->
+  <div class="hero">
+    <div class="hero-inner">
+
+      <!-- photos -->
+      <div class="photos">
+        <div class="photo-stack" title="Hover to see the real me">
+          <img class="pro" src="pro.jpg" alt="Amir Karimi — professional photo" />
+          <img class="unpro" src="un-pro.jpg" alt="Amir Karimi — casual photo" />
+        </div>
+        <p class="photo-caption">
+          I went with the suit pic.<br>
+          But honestly I'm almost always in a t-shirt, looking miserable because my circuit is showing weird signals or smells hot.<br><br>
+          <em>Hover ↑ to see the real me.</em><br><br>
+          Yes, I'm a Lakers fan.<br>
+          And yes, we are not doing great these days.&nbsp;🏀
+        </p>
+      </div>
+
+      <!-- text -->
+      <div class="hero-text">
+        <div class="eyebrow">PhD Candidate · Biomedical Engineering · UConn</div>
+        <h1>Amir <span class="glow">Karimi</span></h1>
+        <p class="intro">I'm in the final stretch of my Ph.D. in Biomedical Engineering and actively looking for an engineering internship before I transition into industry.</p>
+        <p class="intro-sub">Through CPT, I'm available for internships ranging from 3 to 12 months starting August 2026.</p>
+        <p class="intro-sub" style="margin-top:8px">Open to relocating anywhere in the U.S.</p>
+
+        <!-- Projects link -->
+        <button class="nav-btn projects-btn" onclick="showSection('projects')">▸ Main Projects</button>
+        <div class="projects-note">These are referred to as Project 1 and Project 2 in the skills section below.</div>
+
+        <!-- Skills -->
+        <div class="skills-hint">Click any skill to see what tools, languages, and projects are behind it.</div>
+        <div class="skills-label">Skills</div>
+        <ul class="skills">
+          <li><a href="#hardware">Hardware &amp; Analog Design / PCB Design &amp; Bring-up</a></li>
+          <li><a href="#embedded">Embedded Systems &amp; Firmware</a></li>
+          <li><a href="#dsp">Signal Processing &amp; DSP / Software &amp; Scripting</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====== PROJECTS ====== -->
+  <section id="projects">
+    <div class="projects-header">
+      <button class="back-link" style="margin-bottom:0" onclick="goHome()">◂ Back to main page</button>
+      <h2>Main Projects</h2>
+    </div>
+    <div class="cols">
+
+      <!-- LEFT: Neurostimulator -->
+      <div class="col">
+        <div class="col-title">Neurostimulator Design <span class="col-sub">(Project 1)</span></div>
+        <div class="col-meta">2022 – 2024 &nbsp;·&nbsp; Mainly embedded systems, less analog front-end</div>
+        <div class="proj-card neuro-card">
+
+          <!-- Part 1: Overview -->
+          <div class="neuro-part">
+            <img src="p1_1.png" alt="Neurostimulator overview" class="proj-img-top" />
+            <p>One of my hardware projects was a custom neurostimulation PCB designed to overcome one of the biggest limitations in neural interfaces: safely injecting enough charge into tissue without exceeding electrochemical safety limits at the electrode–tissue interface.</p>
+            <p style="margin-top:10px">To address this, I implemented an anodic-bias technique that pre-biases the electrode by up to +600 mV before the stimulation pulse, effectively expanding the safe charge-injection window and enabling significantly higher stimulation currents without leaving the electrode's safe operating region.</p>
+          </div>
+
+          <!-- subtle divider -->
+          <div class="neuro-divider"></div>
+
+          <!-- Part 2: System detail -->
+          <div class="neuro-part">
+            <div class="neuro-row">
+              <img src="p1.png" alt="Neurostimulator PCB detail" class="proj-img" />
+              <div>
+                <p>The system is built around an STM32F767 microcontroller that handles waveform generation, real-time monitoring, and wireless communication. I also designed the complete mixed-signal hardware stack, including precision current drivers, analog front-end circuitry, high-speed data acquisition, power management, and battery-powered operation. The result is a portable research-grade neurostimulator that combines embedded systems, analog design, and electrochemical safety monitoring into a single platform.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MIDDLE: Multimodal Biosignal -->
+      <div class="col">
+        <div class="col-title">Multimodal Biosignal Design <span class="col-sub">(Project 2)</span></div>
+        <div class="col-meta">2024 – present &nbsp;·&nbsp; PhD thesis &nbsp;·&nbsp; Built everything from scratch &nbsp;·&nbsp; Working on a patent &nbsp;·&nbsp; Please don't judge, I love it 🙂</div>
+        <div class="proj-card neuro-card">
+          <div class="neuro-part">
+            <img src="p2.png" alt="Multimodal biosignal PCB" class="proj-img-top" />
+            <p>I designed a multimodal biosignal acquisition platform that records EDA, ECG, and sEMG on a single PCB. The part I designed from scratch was the EDA front end, where I used an AC-excitation architecture to avoid electrode polarization and improve long-term measurement stability.</p>
+            <p style="margin-top:10px">For the ECG and sEMG channels, I adapted well-established front-end designs from the literature and integrated them into the same system. The real challenge was getting three very different analog circuits to live on the same board without constantly interfering with each other.</p>
+            <p style="margin-top:10px">The reason for combining all three signals is that one biosignal alone rarely tells the full story. By recording skin conductance, heart activity, and muscle activity simultaneously, you get a much better picture of what's happening physiologically — and all the data is perfectly synchronized because it comes from the same device.</p>
+
+            <div class="neuro-divider" style="margin-top:14px"></div>
+
+            <p style="margin-top:4px">Unlike my neurostimulation project, this system was tested on human subjects. I validated the hardware against commercial reference devices and used it during physiological experiments.</p>
+            <p style="margin-top:10px">Companies like PLUX Biosignals make commercial multimodal systems, and I always thought it would be fun to build my own version. Plus, as an engineer, it's hard to resist the temptation to put more circuits on the same PCB and see if they can all get along.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Side / Club / Handmade -->
+      <div class="col side">
+        <div class="col-title">Side · Club · Handmade</div>
+        <div class="proj-card neuro-card" style="background:rgba(255,180,84,.03);border-color:rgba(255,180,84,.12)">
+
+          <p class="side-intro">Most of these projects are from my undergraduate years (2018–2022). After that, I started my PhD and shifted my focus toward the two larger research projects described on the left.</p>
+
+          <div class="neuro-divider" style="margin:14px 0"></div>
+
+          <!-- RoboCup -->
+          <div class="side-entry">
+            <div class="neuro-row">
+              <img src="p3.png" alt="RoboCup robotics team" class="proj-img side-img" />
+              <p>Back in Iran, I was part of a RoboCup Small Size robotics team as a hardware engineer. Most of my time was spent designing, debugging, and fixing electronics that inevitably decided to fail five minutes before competitions.</p>
+            </div>
+          </div>
+
+          <div class="neuro-divider" style="margin:14px 0"></div>
+
+          <!-- Precision voltmeter -->
+          <div class="side-entry">
+            <div class="neuro-row">
+              <img src="p3_1.jpg" alt="Homemade precision voltmeter" class="proj-img side-img" />
+              <p>During the COVID lockdown in 2020, I got frustrated with the cheap voltmeters I had available, so I built my own precision voltmeter. Looking back, the PCB layout is far from perfect, but I was still an undergraduate and learning by doing. It worked, and that's what mattered.</p>
+            </div>
+          </div>
+
+          <div class="neuro-divider" style="margin:14px 0"></div>
+
+          <!-- Zener tester -->
+          <div class="side-entry">
+            <div class="neuro-row">
+              <img src="p3_3.png" alt="Zener diode breakdown tester" class="proj-img side-img" />
+              <p>After sacrificing one too many Zener diodes trying to measure their breakdown voltage, I decided to build a dedicated tester that could display the actual breakdown voltage accurately without turning components into smoke generators.</p>
+            </div>
+          </div>
+
+          <div class="neuro-divider" style="margin:14px 0"></div>
+
+          <p class="side-outro">None of these projects are particularly groundbreaking from a scientific perspective. They were mostly driven by curiosity, stubbornness, and the inability to leave an engineering problem alone once it annoyed me enough. In many ways, these small side projects are what built my hardware intuition and probably explain why I eventually ended up pursuing a PhD.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== HARDWARE ====== -->
+  <section id="hardware">
+    <button class="back-link" onclick="goHome()">◂ Back to all skills</button>
+    <div class="sec-label">Hardware &amp; Analog Design · PCB Design &amp; Bring-up</div>
+    <h2>From circuit design to soldered board</h2>
+    <div class="grid">
+
+      <div class="card">
+        <span class="tag">Analog · Validation</span>
+        <h3>SAFE-EDA Front-End</h3>
+        <p>A standalone AC-based electrodermal activity front-end (LTC6992 PWM oscillator, MOSFET level-shifter, Sallen-Key filtering around an ADA4505). Validated against a PowerLab/FE116 gold standard across multiple subjects.</p>
+        <a href="#">▸ read the writeup</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">PCB · KiCad · Bring-up</span>
+        <h3>Custom EDA Acquisition Board</h3>
+        <p>Full hardware pipeline owned end to end: schematic → KiCad layout → fab → soldering → verification. Calibrated 10-bit ADC against known resistors (R²≈0.96) and cross-checked against a reference belt.</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== EMBEDDED ====== -->
+  <section id="embedded">
+    <button class="back-link" onclick="goHome()">◂ Back to all skills</button>
+    <div class="sec-label">Embedded Systems &amp; Firmware</div>
+    <h2>Bare-metal and close to the metal</h2>
+    <div class="grid">
+
+      <div class="card">
+        <span class="tag">Firmware · STM32 · SPI/I2C/UART</span>
+        <h3>Bare-Metal Acquisition Firmware</h3>
+        <p>Register-level C on ARM Cortex-M, peripheral bring-up, and wireless streaming. The unglamorous layer nobody documents — which is exactly why it's worth documenting.</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== DSP + SOFTWARE ====== -->
+  <section id="dsp">
+    <button class="back-link" onclick="goHome()">◂ Back to all skills</button>
+    <div class="sec-label">Signal Processing &amp; DSP · Software &amp; Scripting</div>
+    <h2>Turning noise into numbers you can trust</h2>
+    <div class="grid">
+
+      <div class="card">
+        <span class="tag">DSP · MATLAB · ML</span>
+        <h3>EEG Motor-Imagery Pipeline</h3>
+        <p>3-class motor imagery classification on 64-channel EEG, with a preprocessing pipeline rebuilt to kill artifact leakage — and an honest accuracy number once the leak was fixed. (Ask me about the frontal-channel trap.)</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Python · MATLAB · Data</span>
+        <h3>Signal Analysis &amp; Scripting</h3>
+        <p>Python and MATLAB pipelines for filtering, feature extraction, and visualization of biosignals. The glue between the ADC output and the result a clinician can read.</p>
+        <a href="#">▸ view repo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="sec-label" style="justify-content:center">Contact</div>
+    <h2>Let's talk hardware</h2>
+    <div class="contacts">
+      <a href="mailto:you@example.com">✉ email</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">▸ github</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">▸ linkedin</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">▸ résumé (pdf)</a>
+    </div>
+    <div class="colophon">// hand-written single-file site · no framework · no tracker · just HTML and a soldering iron</div>
+  </footer>
+
+</div>
+
+<script>
+  const hero = document.querySelector('.hero');
+  const footer = document.querySelector('footer');
+  const sections = document.querySelectorAll('section');
+
+  // intercept skill link clicks
+  document.querySelectorAll('.skills a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      showSection(id);
+    });
+  });
+
+  function showSection(id) {
+    hero.style.display = 'none';
+    footer.style.display = 'none';
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === id);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function goHome() {
+    hero.style.display = '';
+    footer.style.display = '';
+    sections.forEach(s => s.classList.remove('active'));
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
